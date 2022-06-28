@@ -11,6 +11,51 @@ $langs = [
   "en" => "English",
   "es" => "Espanol",
 ];
+
+$users = [
+  ["name" => "Vlad", "email" => "vlad@gmail.com"],
+  ["name" => "Anton", "email" => "anton3434@gmail.com"],
+  ["name" => "Eduard", "email" => "edic8345@gmail.com"],
+  ["name" => "Roman", "email" => "romaha234@gmail.com"],
+  ["name" => "Rostik", "email" => "bugiman34@gmail.com"],
+  ["name" => "Mike", "email" => "milki34@gmail.com"],
+];
+
+echo "Number of users ". count($users);
+
+krsort($users);
+
+$userWithMinId = $users[min(array_keys($users))];
+$userWithMaxId = $users[max(array_keys($users))];
+
+$userWithPreMaxId = $users[max(array_keys($users))-1];
+$userWithAfterMinId = $users[min(array_keys($users))+1];
+
+
+echo "<br>";
+echo "<pre>";
+  print_r($users);
+echo "</pre>";
+
+
+echo "<br>";
+echo "<pre>";
+  echo "userWithMinId";
+  print_r($userWithMinId);
+  echo "userWithMaxId";
+  print_r($userWithMaxId);
+  echo "userWithPreMaxId";
+  print_r($userWithPreMaxId);
+  echo "userWithAfterMinId";
+  print_r($userWithAfterMinId);
+echo "</pre>";
+
+unset($users[min(array_keys($users))]);
+
+echo "<pre>";
+  echo "new array after unset method";
+  print_r($users);
+echo "</pre>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
