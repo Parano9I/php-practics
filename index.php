@@ -6,6 +6,11 @@ $email = "test1@gmail.com";
 $password = "frjswen9";
 $username = "Anton";
 
+$langs = [
+  "ua" => "Ukraine",
+  "en" => "English",
+  "es" => "Espanol",
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +40,16 @@ $username = "Anton";
       <div class="input">
         <input type="password" class="input-field" required value="<?php echo $password ?>" />
         <label class="input-label">Password</label>
+      </div>
+      <div class="input">
+        <select class="input-field" name="langs" required>
+          <?php foreach($langs as $langCode => $lang):?>
+          <option value="<?=$langCode; ?>">
+            <?=$lang; ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
+        <label class="input-label">Change language</label>
       </div>
       <div class="action">
         <button class="action-button">Sign up</button>
