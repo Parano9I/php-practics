@@ -13,12 +13,12 @@ $langs = [
 ];
 
 $users = [
-  ["name" => "Vlad", "email" => "vlad@gmail.com"],
-  ["name" => "Anton", "email" => "anton3434@gmail.com"],
-  ["name" => "Eduard", "email" => "edic8345@gmail.com"],
-  ["name" => "Roman", "email" => "romaha234@gmail.com"],
-  ["name" => "Rostik", "email" => "bugiman34@gmail.com"],
-  ["name" => "Mike", "email" => "milki34@gmail.com"],
+  "40" => ["name" => "Vlad", "email" => "vlad@gmail.com"],
+  "2" => ["name" => "Anton", "email" => "anton3434@gmail.com"],
+  "0" => ["name" => "Eduard", "email" => "edic8345@gmail.com"],
+  "29" => ["name" => "Roman", "email" => "romaha234@gmail.com"],
+  "18" => ["name" => "Rostik", "email" => "bugiman34@gmail.com"],
+  "6" => ["name" => "Mike", "email" => "milki34@gmail.com"],
 ];
 
 echo "Number of users ". count($users);
@@ -28,15 +28,30 @@ krsort($users);
 $userWithMinId = $users[min(array_keys($users))];
 $userWithMaxId = $users[max(array_keys($users))];
 
-$userWithPreMaxId = $users[max(array_keys($users))-1];
-$userWithAfterMinId = $users[min(array_keys($users))+1];
+function getArrayElement(array $array, int $shiftElement): array{
+  
+  if(!$shiftElement) return 0;
 
+  $shiftMode = gmp_sign($shiftElement);
+  if($shiftMode === -1) end($array);
+   
+  for($i = 0; $i < abs($shiftElement); $i++){
+    
+    $shiftMode === 1 ? next($array) : prev($array);
+
+  };
+
+  return current($array);
+};
+
+ $userWithPreMaxId = getArrayElement($users, 1);
+ $userWithAfterMinId = getArrayElement($users, -1);
 
 echo "<br>";
 echo "<pre>";
+  echo "Sort array by DESC <br>";
   print_r($users);
 echo "</pre>";
-
 
 echo "<br>";
 echo "<pre>";
@@ -89,8 +104,8 @@ echo "</pre>";
       <div class="input">
         <select class="input-field" name="langs" required>
           <?php foreach($langs as $langCode => $lang):?>
-          <option value="<?=$langCode; ?>">
-            <?=$lang; ?>
+          <option value="<?php echo $langCode; ?>">
+            <?php echo $lang; ?>
           </option>
           <?php endforeach; ?>
         </select>
