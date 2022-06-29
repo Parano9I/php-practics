@@ -21,16 +21,30 @@ $users = [
   "6" => ["name" => "Mike", "email" => "milki34@gmail.com", "lang" => "de"],
 ];
 
-$greetings = [
-  "ua" => "Привіт",
-  "en" => "Hello",
-  "fr" => "Bonjour",
-  "de" => "Hallo",
-  "ru" => "Привет",
-];
+$date = "31-12-2020";
+$formatedDate = implode(".",array_reverse(explode("-", $date)));
 
-$langFirstUser = $users[40]["lang"];
-$langLastUser = $users[6]["lang"];
+echo $formatedDate;
+
+$englishLeasonTitle = "london is the capital of great britain";
+$formatedEnglishLeasonTitle = ucwords($englishLeasonTitle);
+
+echo "<br>";
+echo $formatedEnglishLeasonTitle;
+
+$password = "gfg4@_d#dfd";
+$passLength = strlen($password);
+
+echo "<br>";
+echo $passLength > 7 && $passLength < 12 
+  ? "Password is good !" 
+  : "Password is bad ! Create a new password !";
+
+$string = "1a2b3c4b5d6e7f8g9h0";
+
+echo "<br>";
+echo preg_replace("/[0-9]+/", "", $string); 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,19 +62,6 @@ $langLastUser = $users[6]["lang"];
     <h2 class="card-heading">
       Sign up
     </h2>
-    <?php if($langFirstUser === $langLastUser) : ?>
-    <h2 class="sub-title">
-      <?php echo $greetings[$langFirstUser] ?>
-    </h2>
-    <?php endif; ?>
-    <?php if($langFirstUser !== $langLastUser) : ?>
-    <h2 class="sub-title">
-      <?php echo $greetings[$langFirstUser] ?>
-    </h2>
-    <h2 class="sub-title">
-      <?php echo $greetings[$langLastUser] ?>
-    </h2>
-    <?php endif; ?>
     <form class="card-form">
       <div class="input">
         <input type="text" class="input-field" value="<?php echo $username ?>" required />
