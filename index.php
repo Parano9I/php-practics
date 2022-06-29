@@ -16,34 +16,24 @@ $users = [
   "40" => ["name" => "Vlad", "email" => "vlad@gmail.com", "lang" => "fr"],
   "2" => ["name" => "Anton", "email" => "anton3434@gmail.com", "lang" => "ru"],
   "0" => ["name" => "Eduard", "email" => "edic8345@gmail.com", "lang" => "en"],
-  "29" => ["name" => "Roman", "email" => "romaha234@gmail.com", "lang" => "fr"],
+  "29" => ["name" => "Anton", "email" => "romaha234@gmail.com", "lang" => "fr"],
   "18" => ["name" => "Rostik", "email" => "bugiman34@gmail.com", "lang" => "de"],
-  "6" => ["name" => "Mike", "email" => "milki34@gmail.com", "lang" => "de"],
+  "6" => ["name" => "Vlad", "email" => "milki34@gmail.com", "lang" => "de"],
 ];
 
-$date = "31-12-2020";
-$formatedDate = implode(".",array_reverse(explode("-", $date)));
+$usersName = array_map(function($user){
+  return $user["name"];
+}, $users);
 
-echo $formatedDate;
+$usersCountDuplicateName = array_count_values($usersName);
 
-$englishLeasonTitle = "london is the capital of great britain";
-$formatedEnglishLeasonTitle = ucwords($englishLeasonTitle);
+foreach($usersCountDuplicateName as $name => $count){
+  echo $count > 1 ? "{$name} => {$count} <br>" : "";
+};
 
-echo "<br>";
-echo $formatedEnglishLeasonTitle;
-
-$password = "gfg4@_d#dfd";
-$passLength = strlen($password);
-
-echo "<br>";
-echo $passLength > 7 && $passLength < 12 
-  ? "Password is good !" 
-  : "Password is bad ! Create a new password !";
-
-$string = "1a2b3c4b5d6e7f8g9h0";
-
-echo "<br>";
-echo preg_replace("/[0-9]+/", "", $string); 
+// echo "<pre>";
+//   print_r(array_count_values($usersName));
+// echo "</pre>";
 
 ?>
 <!DOCTYPE html>
