@@ -21,36 +21,22 @@ $users = [
   "6" => ["name" => "Vlad", "email" => "milki34@gmail.com", "lang" => "de"],
 ];
 
-// function groupingUsersBy(array $users, string $parametr): array {
-//   return array_reduce($users, function($acc, $user) use ($parametr){
-//     $key = $user[$parametr];
-//     if (!array_key_exists($key, $acc)) {
-//       $acc[$key] = [];
-//     };
-//     array_push($acc[$key], $user);
-//     return $acc;
-//   }, []);
-// };
-
-function groupingUsersBy(array $users, string $parametr): array {
+function arr_reverse(array $users): array {
   $result = [];
+  $arrMaxIndex = count($users) - 1;
   $usersValue = array_values($users);
+  $usersKey = array_keys($users);
 
-  foreach($usersValue as $user => $values){
-    
-    $key = $values[$parametr];
-
-    if(!array_key_exists($key, $result)){
-      $result[$key] = [];
-    };
-    array_push($result[$key], $values);
-  }
-
+  for($i = 0; $i <= $arrMaxIndex; $i++){
+    $result[$usersKey[$arrMaxIndex - $i]] = $usersValue[$arrMaxIndex - $i];
+  }; 
   return $result;
 };
 
+
+
 echo "<pre>";
-  print_r(groupingUsersBy($users, "lang"));
+  print_r(arr_reverse($users));
 echo "</pre>";
 
 ?>
