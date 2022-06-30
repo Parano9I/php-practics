@@ -14,26 +14,44 @@ $langs = [
 
 $users = [
   "40" => ["name" => "Vlad", "email" => "vlad@gmail.com", "lang" => "fr"],
-  "2" => ["name" => "Anton", "email" => "anton3434@gmail.com", "lang" => "ru"],
+  "2" => ["name" => "Anton", "email" => "anton3434@gmail.com", "lang" => "fr"],
   "0" => ["name" => "Eduard", "email" => "edic8345@gmail.com", "lang" => "en"],
   "29" => ["name" => "Anton", "email" => "romaha234@gmail.com", "lang" => "fr"],
   "18" => ["name" => "Rostik", "email" => "bugiman34@gmail.com", "lang" => "de"],
   "6" => ["name" => "Vlad", "email" => "milki34@gmail.com", "lang" => "de"],
 ];
 
-$usersName = array_map(function($user){
-  return $user["name"];
-}, $users);
+// function groupingUsersBy(array $users, string $parametr): array {
+//   return array_reduce($users, function($acc, $user) use ($parametr){
+//     $key = $user[$parametr];
+//     if (!array_key_exists($key, $acc)) {
+//       $acc[$key] = [];
+//     };
+//     array_push($acc[$key], $user);
+//     return $acc;
+//   }, []);
+// };
 
-$usersCountDuplicateName = array_count_values($usersName);
+function groupingUsersBy(array $users, string $parametr): array {
+  $result = [];
+  $usersValue = array_values($users);
 
-foreach($usersCountDuplicateName as $name => $count){
-  echo $count > 1 ? "{$name} => {$count} <br>" : "";
+  foreach($usersValue as $user => $values){
+    
+    $key = $values[$parametr];
+
+    if(!array_key_exists($key, $result)){
+      $result[$key] = [];
+    };
+    array_push($result[$key], $values);
+  }
+
+  return $result;
 };
 
-// echo "<pre>";
-//   print_r(array_count_values($usersName));
-// echo "</pre>";
+echo "<pre>";
+  print_r(groupingUsersBy($users, "lang"));
+echo "</pre>";
 
 ?>
 <!DOCTYPE html>
