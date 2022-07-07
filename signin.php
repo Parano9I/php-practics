@@ -5,7 +5,8 @@ const SALT = '6834_@#%ghjtiodjkghjdlvbjg';
 
 $isAuth = false;
 
-function authLog (bool $isAuth, string $username):void {
+function authLog(bool $isAuth, string $username): void
+{
     $filePath = ROOT_PATH . "/resources/{$username}.txt";
     $userLogFile = fopen($filePath, 'a+');
     $str = fgets($userLogFile);
@@ -15,7 +16,7 @@ function authLog (bool $isAuth, string $username):void {
 
     if ($str) {
         [$good, $err] = explode(' ', $str);
-        $isAuth ? $good ++ : $err ++;
+        $isAuth ? $good++ : $err++;
     } else {
         $isAuth ? $good = 1 : $err = 1;
     }
@@ -29,7 +30,7 @@ function authLog (bool $isAuth, string $username):void {
 if (!empty($_POST)) {
     $cryptPass = crypt($_POST['password'], SALT);
 
-    try{
+    try {
         $userDataFile = fopen(ROOT_PATH . '/resources/usersData.txt', 'r');
 
         while (!feof($userDataFile)) {
@@ -52,45 +53,4 @@ if (!empty($_POST)) {
 
 $message = $isAuth ? 'Successful authorization' : 'Wrong login or password';
 
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="index.css">
-  <title>Sign In</title>
-</head>
-
-<body>
-  <div class="card">
-    <h2 class="card-heading">
-      Sign in
-    </h2>
-    <?php if ($isAuth): ?>
-    <div class="auth-message" style="background-color: #578a4288;"><?php echo $_POST['username'] ?></div>
-    <?php endif; ?>
-    <?php if (!$isAuth && !empty($_POST)): ?>
-    <div class="auth-message" style="background-color: #8a424288;">Wrong login or password</div>
-    <?php endif; ?>
-    <form class="card-form" method="POST">
-      <div class="input">
-        <input type="text" class="input-field" name="username" value="" required />
-        <label class="input-label">Username</label>
-      </div>
-      <div class="input">
-        <input type="password" class="input-field" name="password" required value="" />
-        <label class="input-label">Password</label>
-      </div>
-      <div class="action">
-        <input type="submit" value="Sign in" class="action-button" />
-      </div>
-    </form>
-  </div>
-</body>
-
-
-</html>
+include_once 'Views/signIn.php';
