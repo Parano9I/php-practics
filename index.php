@@ -1,24 +1,20 @@
 <?php
-
 declare(strict_types=1);
 mb_internal_encoding('utf-8');
 
+require 'helpers/getUsers.php';
+require 'helpers/fillterByField.php';
+
 define('ROOT_PATH', dirname(__FILE__));
-const SALT = '6834_@#%ghjtiodjkghjdlvbjg';
 
-if (!empty($_POST)) {
-    $cryptPass = crypt($_POST['password'], SALT);
-    $userData = "{$_POST['username']} {$_POST['email']} {$cryptPass}" . PHP_EOL;
+$users = getUsers(ROOT_PATH . '/resources/usersData.txt');
 
-    try{
-        $userDataFile = fopen(ROOT_PATH . '/resources/usersData.txt', 'a');
-        fwrite($userDataFile, $userData);
-        fclose($userDataFile);
-        header('Location: /signin.php');
-    } catch (Exception $err) {
-        echo 'Error ' . $err->getMessage();
-    }
-}
+echo '<pre>';
+print_r(fillterByField($users, 'password', function($pass){
+    return strlen($pass) < 8 ? true : false;
+}));
+echo '</pre>';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
