@@ -23,3 +23,18 @@ function getUsers(string $filePath):array {
     fclose($usersDataFile);
     return $result;
 };
+
+function findUser(array $users, array $findParams): array|string{
+    $result = [];
+    foreach ($users as $user) {
+        $userValues = array_values($user);
+        if (in_array($findParams[0], $userValues) && in_array($findParams[1], $userValues)) {
+            $result = [
+                'login' => $user['login'],
+                'password' => $user['password'],
+            ];
+            break;
+        };
+    };
+    return $result = $result ? $result : 'User is not found';
+}

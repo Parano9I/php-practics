@@ -1,5 +1,5 @@
 <?php
-function fillterByField(array $array, string $field, callable $callback){
+function fillterByField(array $array, string $field, callable $callback):array{
     $result = [];
 
     foreach ($array as $value) {
