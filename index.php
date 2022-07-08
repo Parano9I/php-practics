@@ -1,11 +1,7 @@
 <?php
-declare(strict_types=1);
-mb_internal_encoding('utf-8');
-
-include 'helpers/getUsers.php';
-include 'helpers/fillterByField.php';
-
-define('ROOT_PATH', dirname(__FILE__));
+include_once 'config.php';
+include_once 'helpers/getUsers.php';
+include_once 'helpers/fillterByField.php';
 
 $users = getUsers(ROOT_PATH . '/resources/usersData.txt');
 

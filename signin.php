@@ -1,7 +1,5 @@
 <?php
-
-define('ROOT_PATH', dirname(__FILE__));
-const SALT = '6834_@#%ghjtiodjkghjdlvbjg';
+include_once 'config.php';
 
 $isAuth = false;
 
