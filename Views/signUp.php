@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php include_once 'head.php' ?>
+
 <body>
     <div class="card">
         <h2 class="card-heading">
@@ -29,4 +30,5 @@
         </p>
     </div>
 </body>
+
 </html>

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "newName",
+    "description": "An apple mobile which is nothing like apple",
+    "price": 593,
+    "image": "https://dummyjson.com/image/i/products/1/1.jpg"
+  },
+  {
+    "id": 8,
+    "name": "HP Pavilion 15-DK1056WM",
+    "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
+    "price": 1099,
+    "image": "https://dummyjson.com/image/i/products/10/1.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Brown Perfume",
+    "description": "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml",
+    "price": 40,
+    "image": "https://dummyjson.com/image/i/products/12/2.jpg"
+  }
+]
