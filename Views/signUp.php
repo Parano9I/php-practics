@@ -7,6 +7,9 @@
         <h2 class="card-heading">
             Sign up
         </h2>
+        <?php if ($errorMsg) : ?>
+            <div class="error-msg"><?php echo $errorMsg ?></div>
+        <?php endif; ?>
         <form class="card-form" name="signin" method="POST">
             <div class="input">
                 <input name="username" type="text" class="input-field" value="<?php echo !empty($_POST['username']) ? $_POST['username'] : '' ?>" required />

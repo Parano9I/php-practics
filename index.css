@@ -12,7 +12,7 @@ body {
   min-height: 70vh;
   margin: 15vh auto 10vh auto;
   background-color: #fff;
-	border-radius: 10px;
+  border-radius: 10px;
 }
 .card {
   margin: 2rem auto;
@@ -98,59 +98,62 @@ body {
 .action-button:focus {
   outline: 0;
 }
-.auth-message {
+.error-msg {
   padding: 10px 10px;
   border-radius: 5px;
+  background-color: rgba(255, 0, 0, 0.267);
 }
-.products__title{
-	text-align: center;
-	font-size: 35px;
+.products__title {
+  text-align: center;
+  font-size: 35px;
 }
-.products__list{
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-auto-rows: 1fr;
-	grid-gap: 40px;
-	margin: 0;
-	padding: 0 20px;
-	list-style: none;
+.products__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  grid-gap: 40px;
+  margin: 0;
+  padding: 0 20px;
+  list-style: none;
 }
-.product{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: flex-start;
-	padding: 15px;
-	border-radius: 5px; 
-	box-shadow: 0px 5px 26px 4px rgba(0,0,0,0.44);
+  height: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 26px 4px rgba(0, 0, 0, 0.44);
 }
-.product__img{
-	width: 100%;
-	height: 200px;
-	border-radius: 5px;
-	object-fit: fill;
+.product__img {
+  width: 100%;
+  height: 200px;
+  border-radius: 5px;
+  object-fit: fill;
 }
-.product__title{
-	text-align: center;
+.product__title {
+  text-align: center;
 }
-.product__descr{
-	text-align: center;
+.product__descr {
+  text-align: center;
   flex: 1 0 auto;
 }
-.product__bottom-wrapper{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
+.product__bottom-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
-.product__price{
+.product__price {
   font-weight: 800;
-
 }
-.product__link{
-	border-radius: 5px;
-	background-color: #6658d3;
-	text-decoration: none;
-	color: #fff;
-	padding: 7px;
+.product__btn {
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #6658d3;
+  text-decoration: none;
+  color: #fff;
+  padding: 7px;
+  min-width: 40%;
 }
