@@ -1,54 +1,28 @@
 <?php
 include_once 'config.php';
 
-$isAuth = false;
-
-function authLog(bool $isAuth, string $username): void
-{
-    $filePath = ROOT_PATH . "/resources/{$username}.txt";
-    $userLogFile = fopen($filePath, 'a+');
-    $str = fgets($userLogFile);
-    fclose($userLogFile);
-    $good = 0;
-    $err = 0;
-
-    if ($str) {
-        [$good, $err] = explode(' ', $str);
-        $isAuth ? $good++ : $err++;
-    } else {
-        $isAuth ? $good = 1 : $err = 1;
-    }
-
-    $newStr = "{$good} {$err}" . PHP_EOL;
-    $userLogFile = fopen($filePath, 'w+');
-    fwrite($userLogFile, $newStr);
-    fclose($userLogFile);
-};
+$errorMsg = '';
 
 if (!empty($_POST)) {
-    $cryptPass = crypt($_POST['password'], SALT);
+    $users = json_decode(file_get_contents(USERS_JSON_PATH), true);
+    $postPassword = $_POST['password'];
+    $user = array_filter($users, function ($user) use ($postPassword) {
+        $isVerifyLogin = ($user['username'] === $_POST['username']);
+        $isVerifyPass = (password_verify($postPassword, $user['password']));
 
-    try {
-        $userDataFile = fopen(ROOT_PATH . '/resources/usersData.txt', 'r');
+        return $isVerifyLogin && $isVerifyPass ? true : false;
+    });
 
-        while (!feof($userDataFile)) {
-            $str = fgets($userDataFile);
-            $strFormated = str_replace(["\n", "\r"], '', $str);
-
-            if (str_contains($str, $_POST['username'])) {
-                [$name, $email, $pass] = explode(' ', $strFormated);
-                $isAuth = hash_equals(crypt($_POST['password'], $pass), $pass);
-                authLog($isAuth, $name);
-                break;
-            };
-        };
-
-        fclose($userDataFile);
-    } catch (Exception $err) {
-        echo 'Error ' . $err->getMessage();
+    if (!empty($user[0])) {
+        $userId = $user[0]['id'];
+        $_SESSION['userId'] = $userId;
+        if (!empty($_POST['remember'])) {
+            setcookie("userId", $userId, time() + 3600);
+        }
+        header('Location: /products.php');
+    } else {
+        $errorMsg = 'Wrong login or password';
     }
 }
-
-$message = $isAuth ? 'Successful authorization' : 'Wrong login or password';
 
 include_once 'Views/signIn.php';

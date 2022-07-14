@@ -19,7 +19,7 @@ if (!empty($_POST)) {
             'id' => $userId,
             'username' => $_POST['username'],
             'email' => $_POST['email'],
-            'password' => crypt($_POST['username'], SALT),
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
         ];
         file_put_contents(USERS_JSON_PATH, addToArrJSON($usersJSON, $user));
         header('Location: /signin.php');

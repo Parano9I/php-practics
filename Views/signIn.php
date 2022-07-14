@@ -7,11 +7,8 @@
         <h2 class="card-heading">
             Sign in
         </h2>
-        <?php if ($isAuth) : ?>
-            <div class="auth-message" style="background-color: #578a4288;"><?php echo $_POST['username'] ?></div>
-        <?php endif; ?>
-        <?php if (!$isAuth && !empty($_POST)) : ?>
-            <div class="auth-message" style="background-color: #8a424288;">Wrong login or password</div>
+        <?php if ($errorMsg) : ?>
+            <div class="error-msg"><?php echo $errorMsg ?></div>
         <?php endif; ?>
         <form class="card-form" method="POST">
             <div class="input">
@@ -22,6 +19,7 @@
                 <input type="password" class="input-field" name="password" required value="" />
                 <label class="input-label">Password</label>
             </div>
+            <label class="form-checked__label" style="display: inline-block; margin-top: 20px"><input type="checkbox" class="form-checked__input" name="remember" value="true" /> Remember me</label>
             <div class="action">
                 <input type="submit" value="Sign in" class="action-button" />
             </div>
