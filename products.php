@@ -9,7 +9,6 @@ if (!file_exists(CARTS_JSON_PATH)) {
 
 if (!empty($_POST)) {
     $carts = json_decode(file_get_contents(CARTS_JSON_PATH), true);
-    $products = json_decode(file_get_contents(PRODUCTS_JSON_PATH), true);
 
     $productId = $_POST['productId'];
     $userId = $_SESSION['userId'];
@@ -20,7 +19,6 @@ if (!empty($_POST)) {
 
     if ($userCart) {
         array_push($userCart['items'], $productId);
-        // array_replace($carts, $userCart);
         $carts = array_map(function ($cart) use ($userCart) {
             if ($cart['userId'] === $userCart['userId']) {
                 return $userCart;
@@ -36,9 +34,7 @@ if (!empty($_POST)) {
     file_put_contents(CARTS_JSON_PATH, json_encode($carts));
 }
 
-$productsJson = file_get_contents(PRODUCTS_JSON_PATH);
-$products = json_decode($productsJson, true);
-
+$products = json_decode(file_get_contents(PRODUCTS_JSON_PATH), true);
 
 
 
