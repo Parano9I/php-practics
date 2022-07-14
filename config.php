@@ -6,9 +6,9 @@ mb_internal_encoding('utf-8');
 
 session_start();
 
-if(empty($_SESSION['userId'])){
-  header('Location: ');
-}
+if(empty($_SESSION['userId']) && !empty($_COOKIE['userId'])){
+  $_SESSION['userId'] = $_COOKIE['userId'];
+} else header('Location: ');
 
 define('ROOT_PATH', dirname(__FILE__));
 const SALT = '6834_@#%ghjtiodjkghjdlvbjg';
