@@ -1,31 +1,27 @@
 <?php
 include_once 'config.php';
-include_once 'helpers/getUsers.php';
-include_once 'helpers/fillterByField.php';
-include_once 'helpers/addToJSON.php';
 
 $errorMsg = '';
 
-if (!file_exists(USERS_JSON_PATH)) {
-    $usersFile = fopen(USERS_JSON_PATH, 'a');
-    fwrite($usersFile, json_encode([]));
-    fclose($usersFile);
-}
 if (!empty($_POST)) {
-    $usersJSON = file_get_contents(USERS_JSON_PATH);
-    if (!str_contains($usersJSON, $_POST['email']) && !str_contains($usersJSON, $_POST['username'])) {
-        $userId = uniqid();
-        $user = [
-            'id' => $userId,
-            'username' => $_POST['username'],
-            'email' => $_POST['email'],
-            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-        ];
-        file_put_contents(USERS_JSON_PATH, addToArrJSON($usersJSON, $user));
+    $data = [
+        'username' => $_POST['username'],
+        'email' => $_POST['email'],
+        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+    ];
+    $payload = json_encode($data);
+
+    $ch = curl_init('http://api.loc');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = json_decode(curl_exec($ch), true);
+    curl_close($ch);
+
+    if ($response['status'] === 200) {
         header('Location: /signin.php');
-    } else {
-        $errorMsg = 'This email or username is already registered';
-    }
+    } else $errorMsg = $response['message'];
 }
 
 

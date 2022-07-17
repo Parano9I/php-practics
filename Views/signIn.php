@@ -19,7 +19,10 @@
                 <input type="password" class="input-field" name="password" required value="" />
                 <label class="input-label">Password</label>
             </div>
-            <label class="form-checked__label" style="display: inline-block; margin-top: 20px"><input type="checkbox" class="form-checked__input" name="remember" value="true" /> Remember me</label>
+            <label class="form-checked__label" style="display: inline-block; margin-top: 20px">
+                <input type="checkbox" class="form-checked__input" name="remember" value="true" />
+                Remember me
+            </label>
             <div class="action">
                 <input type="submit" value="Sign in" class="action-button" />
             </div>
