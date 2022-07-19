@@ -1,0 +1,32 @@
+CREATE DATABASE shop_lamp_dev;
+
+CREATE TABLE `Category` (
+    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE `Product` (
+    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `title` VARCHAR(250) NOT NULL,
+    `price` DECIMAL(10, 2) DEFAULT(000.00),
+    `amount` SMALLINT UNSIGNED DEFAULT(1),
+    `category_id` BIGINT UNSIGNED NOT NULL,
+    CONSTRAINT `category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `Category`(`id`)
+);
+
+CREATE TABLE `User` (
+    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `login` VARCHAR(150) UNIQUE NOT NULL,
+    `email` DECIMAL(10, 2) UNIQUE NOT NULL,
+    `password` VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE `Cart` (
+    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `product_id` BIGINT UNSIGNED NOT NULL,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `amount` SMALLINT UNSIGNED DEFAULT(1),
+    `created_at` TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
+    CONSTRAINT `product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`),
+    CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`)
+);
