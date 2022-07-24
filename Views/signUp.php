@@ -7,22 +7,32 @@
         <h2 class="card-heading">
             Sign up
         </h2>
-        <?php if ($errorMsg) : ?>
-            <div class="error-msg"><?php echo $errorMsg ?></div>
-        <?php endif; ?>
         <form class="card-form" name="signin" method="POST">
             <div class="input">
-                <input name="username" type="text" class="input-field" value="<?php echo !empty($_POST['username']) ? $_POST['username'] : '' ?>" required />
-                <label class="input-label">Username</label>
+                <input name="login" type="text" class="input-field" value="<?php echo !empty($_POST['login']) ? $_POST['login'] : '' ?>" required />
+                <label class="input-label">Login</label>
             </div>
+            <?php if (!empty($errorsMsg['login'])) : ?>
+                <div class="error-msg"><?php echo $errorsMsg['login'] ?></div>
+            <?php endif; ?>
             <div class="input">
                 <input name="email" type="text" class="input-field" value="<?php echo !empty($_POST['email']) ? $_POST['email'] : '' ?>" required />
                 <label class="input-label">Email</label>
             </div>
+            <?php if (!empty($errorsMsg['email'])) : ?>
+                <div class="error-msg"><?php echo $errorsMsg['email'] ?></div>
+            <?php endif; ?>
             <div class="input">
-                <input name="password" type="password" class="input-field" value="" required />
+                <input name="password" type="password" class="input-field" value="<?php echo !empty($_POST['password']) ? $_POST['password'] : '' ?>" required />
                 <label class="input-label">Password</label>
             </div>
+            <div class="input">
+                <input name="confirm_password" type="password" class="input-field" value="" required />
+                <label class="input-label">Password</label>
+            </div>
+            <?php if (!empty($errorsMsg['password'])) : ?>
+                <div class="error-msg"><?php echo $errorsMsg['password'] ?></div>
+            <?php endif; ?>
             <div class="action">
                 <input type="submit" value="Sign up" class="action-button">
             </div>

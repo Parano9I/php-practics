@@ -1,42 +1,37 @@
 <?php
 include_once 'config.php';
 
-if (!file_exists(CARTS_JSON_PATH)) {
-    $usersFile = fopen(CARTS_JSON_PATH, 'a');
-    fwrite($usersFile, json_encode([]));
-    fclose($usersFile);
+if (!isset($_SESSION['userId'])) {
+    header('Location: /signin.php');
 }
+
+$userId = $_SESSION['userId'];
+
+var_dump($userId);
 
 if (!empty($_POST)) {
-    $carts = json_decode(file_get_contents(CARTS_JSON_PATH), true);
-
-    $productId = $_POST['productId'];
-    $userId = $_SESSION['userId'];
-
-    $userCart = [...array_filter($carts, function ($cart) use ($userId) {
-        return $userId === $cart['userId'];
-    })][0];
-
-    if ($userCart) {
-        array_push($userCart['items'], $productId);
-        $carts = array_map(function ($cart) use ($userCart) {
-            if ($cart['userId'] === $userCart['userId']) {
-                return $userCart;
-            } else return $cart;
-        }, $carts);
-    } else {
-        $cart = [
-            'userId' => $userId,
-            'items' => [$productId],
-        ];
-        array_push($carts, $cart);
-    }
-    file_put_contents(CARTS_JSON_PATH, json_encode($carts));
+    $stmt = $db->prepare(
+        "INSERT INTO carts (product_id, user_id, amount) 
+        VALUES (:product_id, :user_id, :amount)"
+    );
+    $stmt->execute([
+        "product_id" => $_POST['product_id'],
+        "user_id" => $userId,
+        "amount" => $_POST['amount']
+    ]);
 }
 
-$products = json_decode(file_get_contents(PRODUCTS_JSON_PATH), true);
 
+$stmt = $db->query('SELECT * FROM products LIMIT 12');
+$products = $stmt->fetchAll();
 
+$stmt = $db->prepare('SELECT product_id FROM carts WHERE user_id = :userId');
+$stmt->execute([
+    "userId" => $userId,
+]);
+$productsInCart = array_column($stmt->fetchAll(), 'product_id');
+
+$isDisabledBuy = fn ($productId) => in_array($productId, $productsInCart) ? 'disabled' : '';
 
 
 include_once 'Views/products.php';

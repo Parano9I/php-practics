@@ -5,17 +5,37 @@ if (!isset($_SESSION['userId'])) {
     header('Location: /signin.php');
 }
 
-$carts = json_decode(file_get_contents(CARTS_JSON_PATH), true);
-$products = json_decode(file_get_contents(PRODUCTS_JSON_PATH), true);
 $userId = $_SESSION['userId'];
 
-$productsId = [...array_filter($carts, function ($userCart) use ($userId) {
-    return $userCart['userId'] === $userId;
-})][0]['items'];
+if (!empty($_POST)) {
+    $productId = $_POST['productId'];
+    $stmt = $db->prepare(
+        'DELETE FROM carts 
+        WHERE product_id = :productId AND user_id = :userId'
+    );
+    $stmt->execute([
+        "userId" => $userId,
+        "productId" => $productId
+    ]);
+}
 
-$cartProducts = array_map(function ($id) use ($products) {
-    $productId = array_search($id, array_column($products, 'id'));
-    return $products[$productId];
-}, $productsId);
+$stmt = $db->prepare(
+    'SELECT 
+        p.id,
+        p.title, 
+        p.price, 
+        p.amount, 
+        p.price, 
+        p.amount*p.price as total_price, 
+        p.image,  
+        p.description 
+    FROM carts c 
+    INNER JOIN products p ON c.product_id = p.id
+    WHERE user_id = :userId;'
+);
+$stmt->execute([
+    "userId" => $userId,
+]);
+$products = $stmt->fetchAll();
 
 include_once 'Views/cart.php';
