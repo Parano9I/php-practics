@@ -8,6 +8,9 @@
             Sign in
         </h2>
         <form class="card-form" method="POST">
+            <?php if (!empty($errorsMsg['error'])) : ?>
+                <div class="error-msg"><?php echo $errorsMsg['error'] ?></div>
+            <?php endif; ?>
             <div class="input">
                 <input type="text" class="input-field" name="login" value="" required />
                 <label class="input-label">Login</label>

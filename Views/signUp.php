@@ -8,6 +8,9 @@
             Sign up
         </h2>
         <form class="card-form" name="signin" method="POST">
+            <?php if (!empty($errorsMsg['error'])) : ?>
+                <div class="error-msg"><?php echo $errorsMsg['error'] ?></div>
+            <?php endif; ?>
             <div class="input">
                 <input name="login" type="text" class="input-field" value="<?php echo !empty($_POST['login']) ? $_POST['login'] : '' ?>" required />
                 <label class="input-label">Login</label>

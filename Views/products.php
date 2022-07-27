@@ -14,7 +14,7 @@
                                 <img class="product__img" src="<?php echo IMAGE_URL . $product['image'] ?>" alt="">
                                 <h3 class="product__title"><?php echo $product['title'] ?></h3>
                                 <p class="product__descr"><?php echo $product['description'] ?></p>
-                                <input type="hidden" name="product_id" value="<?php echo $product['id'] ?>" required />
+                                <input type="hidden" name="productId" value="<?php echo $product['id'] ?>" required />
                                 <div class="product__bottom-wrapper">
                                     <span class="product__price"><?php echo $product['price'] ?>$</span>
                                     <input type="number" class="product__amount" name="amount" value="1" required />

@@ -1,35 +1,21 @@
 <?php
 include_once 'config.php';
 
-if (!isset($_SESSION['userId'])) {
+if (!$user->isAuth()) {
     header('Location: /signin.php');
 }
 
-$userId = $_SESSION['userId'];
-
-var_dump($userId);
+$cart->setUserId($_SESSION['userId']);
 
 if (!empty($_POST)) {
-    $stmt = $db->prepare(
-        "INSERT INTO carts (product_id, user_id, amount) 
-        VALUES (:product_id, :user_id, :amount)"
-    );
-    $stmt->execute([
-        "product_id" => $_POST['product_id'],
-        "user_id" => $userId,
-        "amount" => $_POST['amount']
-    ]);
+    $productId = $_POST['productId'];
+    $amount = $_POST['amount'];
+
+    $cart->addProduct($productId, $amount);
 }
 
-
-$stmt = $db->query('SELECT * FROM products LIMIT 12');
-$products = $stmt->fetchAll();
-
-$stmt = $db->prepare('SELECT product_id FROM carts WHERE user_id = :userId');
-$stmt->execute([
-    "userId" => $userId,
-]);
-$productsInCart = array_column($stmt->fetchAll(), 'product_id');
+$products = $product->getAll();
+$productsInCart = array_column($cart->getProductsId(), 'id');
 
 $isDisabledBuy = fn ($productId) => in_array($productId, $productsInCart) ? 'disabled' : '';
 
