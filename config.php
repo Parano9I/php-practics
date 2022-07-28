@@ -10,6 +10,8 @@ require_once('Classes/User.php');
 require_once('Classes/Product.php');
 require_once('Classes/Cart.php');
 
+require_once('Classes/UserTest.php');
+
 define('ROOT_PATH', dirname(__FILE__));
 define('SALT', '6834_@#%ghjtiodjkghjdlvbjg');
 define('IMAGE_URL', 'https://dummyjson.com/image/i/products/');
