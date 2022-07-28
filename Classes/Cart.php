@@ -1,22 +1,9 @@
 <?php
 class Cart
 {
-    private PDO $db;
-    private int $userId;
-
-    public function __construct(PDO $db)
+    public static function getProducts(PDO $db, int $userId): array
     {
-        $this->db = $db;
-    }
-
-    public function setUserId(int $userId): void
-    {
-        $this->userId = $userId;
-    }
-
-    public function getProducts(): array
-    {
-        $stmt = $this->db->prepare(
+        $stmt = $db->prepare(
             'SELECT 
                 p.id,
                 p.title, 
@@ -31,48 +18,47 @@ class Cart
             WHERE user_id = :userId;'
         );
         $stmt->execute([
-            "userId" => $this->userId
+            "userId" => $userId
         ]);
         return $stmt->fetchAll();
     }
 
-    public function getProductsId(): array
+    public static function getProductsId(PDO $db, int $userId): array
     {
-        $stmt = $this->db->prepare(
+        $stmt = $db->prepare(
             'SELECT p.id
             FROM carts c 
             INNER JOIN products p ON c.product_id = p.id
             WHERE user_id = :userId;'
         );
         $stmt->execute([
-            "userId" => $this->userId
+            "userId" => $userId
         ]);
         return $stmt->fetchAll();
     }
 
-    public function removeProduct(int $productId): void
+    public static function removeProduct(PDO $db, int $userId, int $productId): void
     {
-        $productId = $_POST['productId'];
-        $stmt = $this->db->prepare(
+        $stmt = $db->prepare(
             'DELETE FROM carts 
             WHERE product_id = :productId AND user_id = :userId'
-            );
-            $stmt->execute([
-                "userId" => $this->userId,
-                "productId" => $productId
-            ]);
-        }
-
-        public function addProduct(int $productId, int $amount)
-        {
-            $stmt = $this->db->prepare(
-                "INSERT INTO carts (product_id, user_id, amount) 
-                VALUES (:product_id, :user_id, :amount)"
-            );
-            $stmt->execute([
-                "product_id" => $productId,
-                "user_id" => $this->userId,
-                "amount" => $amount
-            ]);
-        }
+        );
+        $stmt->execute([
+            "userId" => $userId,
+            "productId" => $productId
+        ]);
     }
+
+    public static function addProduct(PDO $db, int $userId ,int $productId, int $amount)
+    {
+        $stmt = $db->prepare(
+            "INSERT INTO carts (product_id, user_id, amount) 
+                VALUES (:product_id, :user_id, :amount)"
+        );
+        $stmt->execute([
+            "product_id" => $productId,
+            "user_id" => $userId,
+            "amount" => $amount
+        ]);
+    }
+}

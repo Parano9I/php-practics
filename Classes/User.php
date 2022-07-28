@@ -8,16 +8,17 @@ class User
     private string $password;
     private PDO $db;
 
-    public function __construct(PDO $db)
-    {
-        $this->db = $db;
-    }
-
-    public function setUser(string $login, string $password, string $email = ''): void
+    private function __construct(string $login, string $password, string $email)
     {
         $this->login = $login;
         $this->email = $email;
         $this->password = $password;
+        $this->db = Db::getInstance()->getConnection();
+    }
+
+    public static function setUser(string $login, string $password, string $email = ''): User
+    {
+        return new User($login, $password, $email);
     }
 
     private function hashPassword(string $pass): string
@@ -39,7 +40,7 @@ class User
         }
     }
 
-    public function isAuth(): bool
+    public static function isAuth(): bool
     {
         return !empty($_SESSION['userId']);
     }
@@ -84,13 +85,13 @@ class User
         }
     }
 
-    public function logout(): void
+    public static function logout(): void
     {
         unset($_SESSION['userId']);
         unset($_COOKIE['userId']);
     }
 
-    public function getId():int
+    public static function getId():int
     {
         return $_SESSION['userId'];
     }

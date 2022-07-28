@@ -1,21 +1,23 @@
 <?php
 include_once 'config.php';
 
-if (!$user->isAuth()) {
+if (!User::isAuth()) {
     header('Location: /signin.php');
 }
 
-$cart->setUserId($_SESSION['userId']);
+$db = Db::getInstance()->getConnection();
+$userId = User::getId();
 
 if (!empty($_POST)) {
     $productId = $_POST['productId'];
     $amount = $_POST['amount'];
 
-    $cart->addProduct($productId, $amount);
+    Cart::addProduct($db, $userId, $productId, $amount);
 }
 
-$products = $product->getAll();
-$productsInCart = array_column($cart->getProductsId(), 'id');
+$products = Product::getAll($db);
+
+$productsInCart = array_column(Cart::getProductsId($db, $userId), 'id');
 
 $isDisabledBuy = fn ($productId) => in_array($productId, $productsInCart) ? 'disabled' : '';
 

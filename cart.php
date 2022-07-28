@@ -1,18 +1,19 @@
 <?php
 include_once 'config.php';
 
-if (!$user->isAuth()) {
+if (!User::isAuth()) {
     header('Location: /signin.php');
 }
 
-$cart->setUserId($_SESSION['userId']);
+$userId = User::getId();
+$db = Db::getInstance()->getConnection();
 
 if (!empty($_POST)) {
     $productId = $_POST['productId'];
     
-    $cart->removeProduct($productId);
+    Cart::removeProduct($db, $userId, $productId);
 }
 
-$products = $cart->getProducts();
+$products = Cart::getProducts($db, $userId);
 
 include_once 'Views/cart.php';

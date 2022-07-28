@@ -20,7 +20,7 @@ if (!empty($_POST)) {
 
     if (empty($errorsMsg)) {
         try {
-            $user->setUser(
+            $user = User::setUser(
                 $_POST['login'],
                 $_POST['password'],
                 $_POST['email'],

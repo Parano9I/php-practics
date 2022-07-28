@@ -13,7 +13,7 @@ if (!empty($_POST)) {
     if (empty($errorsMsg)) {
         $isRemember = empty($_POST['remember']) ? false : true;
         try {
-            $user->setUser(
+            $user = User::setUser(
                 $_POST['login'],
                 $_POST['password']
             );
