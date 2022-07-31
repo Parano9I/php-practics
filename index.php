@@ -1,8 +1,18 @@
 <?php
 include_once 'config.php';
 
+use Shop\User;
+
+use Tasks\Test\{
+    User as Person,
+    Worker,
+    Driver
+};
+
 $errorsMsg = [];
 $notEmpty = ['login', 'email', 'password', 'confirm_password'];
+
+$person1 = new Person('Oleg', 40);
 
 $user1 = new Worker('Ivan', 25, 1000);
 $user2 = new Worker('Vasily', 26, 2000);

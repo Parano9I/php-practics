@@ -1,4 +1,9 @@
 <?php
+
+namespace Shop;
+
+use \PDO;
+
 class Db
 {
     private static $instance = null;

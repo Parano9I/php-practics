@@ -1,6 +1,12 @@
 <?php
 include_once 'config.php';
 
+use Shop\{
+    User,
+    Cart,
+    Db
+};
+
 if (!User::isAuth()) {
     header('Location: /signin.php');
 }
@@ -10,7 +16,7 @@ $db = Db::getInstance()->getConnection();
 
 if (!empty($_POST)) {
     $productId = $_POST['productId'];
-    
+
     Cart::removeProduct($db, $userId, $productId);
 }
 

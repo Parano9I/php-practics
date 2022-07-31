@@ -1,4 +1,9 @@
 <?php
+
+namespace Shop;
+
+use \PDO;
+
 class Cart
 {
     public static function getProducts(PDO $db, int $userId): array
@@ -49,7 +54,7 @@ class Cart
         ]);
     }
 
-    public static function addProduct(PDO $db, int $userId ,int $productId, int $amount)
+    public static function addProduct(PDO $db, int $userId, int $productId, int $amount)
     {
         $stmt = $db->prepare(
             "INSERT INTO carts (product_id, user_id, amount) 

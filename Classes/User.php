@@ -1,5 +1,10 @@
 <?php
 
+namespace Shop;
+
+use \FFI\Exception;
+use \PDO;
+
 class User
 {
     private int $id;

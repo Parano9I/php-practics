@@ -1,4 +1,8 @@
 <?php
+
+namespace Shop;
+
+use \PDO;
 class Product
 {
     public static function getAll(PDO $db): array

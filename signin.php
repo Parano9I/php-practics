@@ -1,6 +1,8 @@
 <?php
 include_once 'config.php';
 
+use Shop\User;
+
 $errorsMsg = [];
 
 if (!empty($_POST)) {

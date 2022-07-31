@@ -1,6 +1,13 @@
 <?php
 include_once 'config.php';
 
+use Shop\{
+    User,
+    Cart,
+    Db,
+    Product
+};
+
 if (!User::isAuth()) {
     header('Location: /signin.php');
 }
