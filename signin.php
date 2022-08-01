@@ -28,8 +28,17 @@ if (!empty($_POST)) {
             $user->login($isRemember);
             header('Location: /products.php');
         } catch (Exception $err) {
+            $userData = [
+                'login' => $_POST['login'],
+                'password' => $_POST['password'],
+            ];
             $errorsMsg['error'] = $err->getMessage();
-            $log->error('Error login: ' . $err->getMessage());
+            $log->error(
+                'Error login: ' .
+                    $err->getMessage() .
+                    ' ' .
+                    json_encode($userData)
+            );
         }
     }
 }

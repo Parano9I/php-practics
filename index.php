@@ -43,8 +43,18 @@ if (!empty($_POST)) {
             $user->login();
             header('Location: /products.php');
         } catch (Exception $err) {
+            $userData = [
+                'login' => $_POST['login'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
+            ];
             $errorsMsg['error'] = $err->getMessage();
-            $log->error('Error registration: ' . $err->getMessage());
+            $log->error(
+                'Error registration: ' .
+                    $err->getMessage() .
+                    ' ' .
+                    json_encode($userData)
+            );
         }
     }
 }
