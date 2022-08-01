@@ -2,11 +2,6 @@
 include_once 'config.php';
 
 use Shop\User;
-use Shop\Tasks\{
-    User as Person,
-    Worker,
-    Driver
-};
 use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -14,43 +9,32 @@ use Monolog\Handler\StreamHandler;
 $log = new Logger('name');
 $log->pushHandler(new StreamHandler(__DIR__ . DIRECTORY_SEPARATOR . $_ENV['LOG_FILE_PATH'], Level::Warning));
 
-
 $errorsMsg = [];
-$notEmpty = ['login', 'email', 'password', 'confirm_password'];
 
 if (!empty($_POST)) {
-    foreach ($_POST as $key => $value) {
-        if (in_array($key, $notEmpty) && empty($value)) {
-            $errorsMsg[$key] = ucfirst($key) . ' is required';
-        }
+    if (empty($_POST['login'])) {
+        $errorsMsg['login'] = 'Login is required';
     }
-    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && empty($errorsMsg['email'])) {
-        $errorsMsg['email'] = 'Email is invalid';
+    if (empty($_POST['password'])) {
+        $errorsMsg['password'] = 'Password is required';
     }
-
-    if ($_POST['password'] !== $_POST['confirm_password']) {
-        $errorsMsg['password'] = 'Password was not confirmed';
-    }
-
     if (empty($errorsMsg)) {
+        $isRemember = empty($_POST['remember']) ? false : true;
         try {
             $user = User::setUser(
                 $_POST['login'],
-                $_POST['password'],
-                $_POST['email'],
+                $_POST['password']
             );
-            $user->signUp();
-            $user->login();
+            $user->login($isRemember);
             header('Location: /products.php');
         } catch (Exception $err) {
             $userData = [
                 'login' => $_POST['login'],
-                'email' => $_POST['email'],
                 'password' => $_POST['password'],
             ];
             $errorsMsg['error'] = $err->getMessage();
             $log->error(
-                'Error registration: ' .
+                'Error login: ' .
                     $err->getMessage() .
                     ' ' .
                     json_encode($userData)
@@ -59,5 +43,4 @@ if (!empty($_POST)) {
     }
 }
 
-
-include_once 'Views/signUp.php';
+include_once 'Views/signIn.php';

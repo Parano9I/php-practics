@@ -1,0 +1,4 @@
+[2022-08-01T17:14:04.830363+03:00] name.ERROR: Error registration: Email is already used [] []
+[2022-08-01T17:15:46.101894+03:00] name.ERROR: Error login: Wrong login or password [] []
+[2022-08-01T17:51:12.189957+03:00] name.ERROR: Error registration: Login is already used{"login":"anton16","email":"medoc1948@gmail.com","password":"anton"} [] []
+[2022-08-01T17:54:12.413708+03:00] name.ERROR: Error login: Wrong login or password {"login":"anton16","password":"dfdfdf"} [] []
