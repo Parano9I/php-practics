@@ -11,12 +11,12 @@ class Db
 
     private function __construct()
     {
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charse=' . DB_CHARSET;
+        $dsn = 'mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'] . ';charse=' . $_ENV['DB_CHARSET'];
         $opt = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ];
-        $this->conn = new PDO($dsn, DB_USER, DB_PASS, $opt);
+        $this->conn = new PDO($dsn, $_ENV['DB_USER'],  $_ENV['DB_PASS'], $opt);
     }
 
     public static function getInstance(): Db

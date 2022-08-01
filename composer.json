@@ -1,0 +1,19 @@
+{
+  "name": "anton/php-practics",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Shop\\": "Classes/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Parano9I",
+      "email": "medoc1948@gmail.com"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.4",
+    "monolog/monolog": "^3.2"
+  }
+}

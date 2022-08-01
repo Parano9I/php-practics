@@ -2,37 +2,21 @@
 include_once 'config.php';
 
 use Shop\User;
-
-use Tasks\Test\{
+use Shop\Tasks\{
     User as Person,
     Worker,
     Driver
 };
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('name');
+$log->pushHandler(new StreamHandler(__DIR__ . DIRECTORY_SEPARATOR . $_ENV['LOG_FILE_PATH'], Level::Warning));
+
 
 $errorsMsg = [];
 $notEmpty = ['login', 'email', 'password', 'confirm_password'];
-
-$person1 = new Person('Oleg', 40);
-
-$user1 = new Worker('Ivan', 25, 1000);
-$user2 = new Worker('Vasily', 26, 2000);
-
-$salarySum = $user1->getSalary() + $user2->getSalary();
-
-echo $salarySum;
-
-$driver1 = new Driver('Ivan', 25, 1000, 'A');
-
-$driver1->setCategory('D');
-
-// $driver1->setCategory('A'); // Fatal error: Uncaught Exception: User is having this category in
-
-// $driver1->setCategory('J'); // Error Fatal error: Uncaught Exception: Category J does not exist in
-
-var_dump($driver1->getCategories());
-
-
-
 
 if (!empty($_POST)) {
     foreach ($_POST as $key => $value) {
@@ -60,6 +44,7 @@ if (!empty($_POST)) {
             header('Location: /products.php');
         } catch (Exception $err) {
             $errorsMsg['error'] = $err->getMessage();
+            $log->error('Error registration: ' . $err->getMessage());
         }
     }
 }

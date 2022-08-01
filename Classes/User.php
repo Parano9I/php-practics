@@ -2,7 +2,7 @@
 
 namespace Shop;
 
-use \FFI\Exception;
+use \Exception;
 use \PDO;
 
 class User
@@ -96,7 +96,7 @@ class User
         unset($_COOKIE['userId']);
     }
 
-    public static function getId():int
+    public static function getId(): int
     {
         return $_SESSION['userId'];
     }

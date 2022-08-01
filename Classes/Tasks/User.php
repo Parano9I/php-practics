@@ -1,6 +1,6 @@
 <?php
 
-namespace Tasks\Test;
+namespace Shop\Tasks;
 
 class User
 {

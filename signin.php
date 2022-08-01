@@ -2,6 +2,12 @@
 include_once 'config.php';
 
 use Shop\User;
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('name');
+$log->pushHandler(new StreamHandler(__DIR__ . DIRECTORY_SEPARATOR . $_ENV['LOG_FILE_PATH'], Level::Warning));
 
 $errorsMsg = [];
 
@@ -23,6 +29,7 @@ if (!empty($_POST)) {
             header('Location: /products.php');
         } catch (Exception $err) {
             $errorsMsg['error'] = $err->getMessage();
+            $log->error('Error login: ' . $err->getMessage());
         }
     }
 }
